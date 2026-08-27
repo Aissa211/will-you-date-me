@@ -117,7 +117,6 @@
     position: fixed;
   }
 
-  /* Success screen */
   .success {
     display: none;
   }
@@ -172,6 +171,19 @@
   </div>
 
 <script>
+  const FORMSPREE_URL = "https://formspree.io/f/mjyvbwzo";
+
+  function sendEmail(message) {
+    fetch(FORMSPREE_URL, {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ message: message, time: new Date().toLocaleString() })
+    }).catch(() => {});
+  }
+
+  // Notification quand la page est ouverte
+  sendEmail("💌 She opened the date page!");
+
   const noBtn = document.getElementById('noBtn');
   const yesBtn = document.getElementById('yesBtn');
   const card = document.getElementById('card');
@@ -197,6 +209,7 @@
   });
 
   function sayYes() {
+    sendEmail("💖 She said YES to the date!!");
     card.classList.add('hidden-content');
     success.classList.add('show');
     launchHearts();
@@ -230,7 +243,6 @@
     }, 300);
   }
 
-  // background floating hearts from the start
   setInterval(() => {
     const h = document.createElement('div');
     h.className = 'floating-heart';
